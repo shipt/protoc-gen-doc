@@ -3,7 +3,7 @@ package gendoc_test
 import (
 	"testing"
 
-	. "github.com/pseudomuto/protoc-gen-doc"
+	. "github.com/shipt/protoc-gen-doc"
 	"github.com/pseudomuto/protokit/utils"
 )
 
