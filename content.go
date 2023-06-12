@@ -10,7 +10,7 @@ type LinkedMessageField struct {
 	Children []*LinkedMessageField
 }
 
-func print(f *LinkedMessageField) {
+func printLinkedMessageField(f *LinkedMessageField) {
 	println(f.Self.Name)
 	if f.Children != nil {
 		for _, child := range f.Children {
