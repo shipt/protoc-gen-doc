@@ -80,6 +80,9 @@ var funcMap = map[string]interface{}{
 	"nobr":       NoBrFilter,
 	"anchor":     AnchorFilter,
 	"getContent": GetContent,
+	"args": func(s ...interface{}) interface{} {
+		return s
+	},
 }
 
 // Processor is an interface that is satisfied by all built-in processors (text, html, and json).
