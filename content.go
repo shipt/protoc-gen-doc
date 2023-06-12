@@ -4,16 +4,17 @@ import (
 	"strings"
 )
 
+// LinkedMessageField - Tree type object the maps graph between fields of proto messages
 type LinkedMessageField struct {
 	Self     *MessageField
 	Children []*LinkedMessageField
 }
 
-func Print(f *LinkedMessageField) {
+func print(f *LinkedMessageField) {
 	println(f.Self.Name)
 	if f.Children != nil {
 		for _, child := range f.Children {
-			Print(child)
+			print(child)
 		}
 	}
 }
@@ -26,7 +27,7 @@ func GetContent(files []*File, baseMessage string) []*LinkedMessageField {
 			if strings.ToLower(message.LongName) == strings.ToLower(baseMessage) {
 				for _, field := range message.Fields {
 					linkedField := &LinkedMessageField{Self: field}
-					if !IsScalarType(field.LongType) {
+					if !isScalarType(field.LongType) {
 						getChildField(files, linkedField)
 					}
 					linkedFields = append(linkedFields, linkedField)
@@ -43,7 +44,7 @@ func getChildField(files []*File, parentLinkedField *LinkedMessageField) {
 			if message.FullName == parentLinkedField.Self.FullType {
 				for _, field := range message.Fields {
 					linkedField := &LinkedMessageField{Self: field}
-					if !IsScalarType(field.LongType) {
+					if !isScalarType(field.LongType) {
 						getChildField(files, linkedField)
 					}
 					if parentLinkedField.Children == nil {
@@ -56,7 +57,7 @@ func getChildField(files []*File, parentLinkedField *LinkedMessageField) {
 	}
 }
 
-func IsScalarType(fieldType string) bool {
+func isScalarType(fieldType string) bool {
 	switch strings.ToLower(fieldType) {
 	case
 		"double",
