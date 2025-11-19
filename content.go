@@ -30,7 +30,7 @@ func GetContent(files []*File, baseMessage, prefix string) []*LinkedMessageField
 					field.FullPath = fmt.Sprintf("%s.%s.%s", prefix, baseMessage, field.Name)
 					linkedField := &LinkedMessageField{Self: field}
 					if !isScalarType(field.LongType) {
-						getChildField(files, linkedField)
+						getChildField(files, linkedField, prefix)
 					}
 					linkedFields = append(linkedFields, linkedField)
 				}
