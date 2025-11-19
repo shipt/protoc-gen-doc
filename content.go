@@ -21,13 +21,13 @@ func printLinkedMessageField(f *LinkedMessageField) {
 }
 
 // GetContent parses file data and returns tree structured list of LinkedMessageField
-func GetContent(files []*File, baseMessage string) []*LinkedMessageField {
+func GetContent(files []*File, baseMessage, prefix string) []*LinkedMessageField {
 	var linkedFields []*LinkedMessageField
 	for _, file := range files {
 		for _, message := range file.Messages {
 			if strings.ToLower(message.LongName) == strings.ToLower(baseMessage) {
 				for _, field := range message.Fields {
-					field.FullPath = fmt.Sprintf("infraspec.Spec.%s", field.Name)
+					field.FullPath = fmt.Sprintf("%s.%s.%s", prefix, baseMessage, field.Name)
 					linkedField := &LinkedMessageField{Self: field}
 					if !isScalarType(field.LongType) {
 						getChildField(files, linkedField)
@@ -40,15 +40,15 @@ func GetContent(files []*File, baseMessage string) []*LinkedMessageField {
 	return linkedFields
 }
 
-func getChildField(files []*File, parentLinkedField *LinkedMessageField) {
+func getChildField(files []*File, parentLinkedField *LinkedMessageField, prefix string) {
 	for _, file := range files {
 		for _, message := range file.Messages {
 			if message.FullName == parentLinkedField.Self.FullType {
 				for _, field := range message.Fields {
-					field.FullPath = fmt.Sprintf("%s.%s", parentLinkedField.Self.LongType, field.Name)
+					field.FullPath = fmt.Sprintf("%s.%s.%s", prefix, parentLinkedField.Self.LongType, field.Name)
 					linkedField := &LinkedMessageField{Self: field}
 					if !isScalarType(field.LongType) {
-						getChildField(files, linkedField)
+						getChildField(files, linkedField, prefix)
 					}
 					if parentLinkedField.Children == nil {
 						parentLinkedField.Children = []*LinkedMessageField{}
