@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
-	"github.com/shipt/protoc-gen-doc/extensions"
 	"github.com/pseudomuto/protokit"
+	"github.com/shipt/protoc-gen-doc/extensions"
 )
 
 // Template is a type for encapsulating all the parsed files, messages, fields, enums, services, extensions, etc. into
@@ -242,6 +242,7 @@ type MessageField struct {
 	IsOneof      bool   `json:"isoneof"`
 	OneofDecl    string `json:"oneofdecl"`
 	DefaultValue string `json:"defaultValue"`
+	FullPath     string `json:"fullPath"`
 
 	Options map[string]interface{} `json:"options,omitempty"`
 }

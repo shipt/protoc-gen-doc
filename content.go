@@ -1,6 +1,7 @@
 package gendoc
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -26,6 +27,7 @@ func GetContent(files []*File, baseMessage string) []*LinkedMessageField {
 		for _, message := range file.Messages {
 			if strings.ToLower(message.LongName) == strings.ToLower(baseMessage) {
 				for _, field := range message.Fields {
+					field.FullPath = field.FullType
 					linkedField := &LinkedMessageField{Self: field}
 					if !isScalarType(field.LongType) {
 						getChildField(files, linkedField)
@@ -43,6 +45,7 @@ func getChildField(files []*File, parentLinkedField *LinkedMessageField) {
 		for _, message := range file.Messages {
 			if message.FullName == parentLinkedField.Self.FullType {
 				for _, field := range message.Fields {
+					field.FullPath = fmt.Sprintf("%s.%s", parentLinkedField.Self.LongType, field.Name)
 					linkedField := &LinkedMessageField{Self: field}
 					if !isScalarType(field.LongType) {
 						getChildField(files, linkedField)
