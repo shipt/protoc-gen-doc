@@ -27,7 +27,7 @@ func GetContent(files []*File, baseMessage string) []*LinkedMessageField {
 		for _, message := range file.Messages {
 			if strings.ToLower(message.LongName) == strings.ToLower(baseMessage) {
 				for _, field := range message.Fields {
-					field.FullPath = field.FullType
+					field.FullPath = fmt.Sprintf("infraspec.Spec.%s", field.Name)
 					linkedField := &LinkedMessageField{Self: field}
 					if !isScalarType(field.LongType) {
 						getChildField(files, linkedField)
