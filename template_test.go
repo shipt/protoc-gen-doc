@@ -6,10 +6,10 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
-	. "github.com/shipt/protoc-gen-doc"
-	"github.com/shipt/protoc-gen-doc/extensions"
 	"github.com/pseudomuto/protokit"
 	"github.com/pseudomuto/protokit/utils"
+	. "github.com/shipt/protoc-gen-doc"
+	"github.com/shipt/protoc-gen-doc/extensions"
 	"github.com/stretchr/testify/require"
 )
 
