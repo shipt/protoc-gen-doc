@@ -65,7 +65,7 @@ func TestGetContent(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			GetContent(tt.args.files, tt.args.baseMessage)
+			GetContent(tt.args.files, tt.args.baseMessage, "prefix")
 		})
 	}
 }
